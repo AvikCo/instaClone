@@ -1,0 +1,4 @@
+.modal__signup {
+    display: flex;
+    flex-direction: column;
+}

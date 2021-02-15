@@ -1,0 +1,26 @@
+
+* {
+  margin: 0;
+}
+.app__header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: white;
+  padding: 18px;
+  object-fit: contain;
+  border-bottom: 1px solid lightgray;
+  display: flex;
+  justify-content: space-between;
+}
+.app__headerImage {
+  object-fit: contain;
+}
+.app {
+  background-color: #FAFAFA;
+}
+.app__posts {
+  padding: 13px;
+  display: flex;
+  justify-content:center;
+}
