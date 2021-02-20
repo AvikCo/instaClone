@@ -1,5 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import Avatar from '@material-ui/core/Avatar'
+import IconButton from '@material-ui/core/IconButton';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ShareIcon from '@material-ui/icons/Share';
+import TurnedInNotRoundedIcon from '@material-ui/icons/TurnedInNotRounded';
+import TurnedInRoundedIcon from '@material-ui/icons/TurnedInRounded';
 import '../Post.css';
 import firebase from 'firebase'
 
@@ -9,6 +15,8 @@ import { Button } from '@material-ui/core';
 function Post({postId, username, user, caption, imageUrl}) {
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
+    const [like, setLike] = useState(false);
+    const [bookmark, setBookmark] = useState(false);
 
 useEffect(()=> {
     let unsubscribe;
@@ -49,6 +57,23 @@ setComment('');
                 <h4>{username}</h4>
             </div>
             <img className="post__image" src={imageUrl}/>
+            <div className="post__likeSection">
+            <IconButton className="post_actions" color="primary" aria-label="upload picture" onClick={()=> setLike(!like)} component="span">
+                    {like ? <FavoriteIcon style={{fill:"red", fontSize: "30px"}}/>
+                    :  <FavoriteBorderIcon  style={{fill: "black", fontSize: "30px"}} />
+                    }
+                </IconButton>
+               <IconButton className="post_actions" color="primary" aria-label="upload picture"  component="span">
+                    <ShareIcon style={{fill: "black"}}/>
+                </IconButton>
+                
+                <IconButton className="post_actions_bookmark" color="primary" aria-label="upload picture" onClick={()=> setBookmark(!bookmark)} component="span">
+                   {bookmark ? <TurnedInRoundedIcon className ="post_bookmarkButton" style={{fill: "black", fontSize: "30px" }}/>
+                    : <TurnedInNotRoundedIcon className ="post_bookmarkButton" style={{fill: "black", fontSize: "30px" }}/>
+                   }
+                </IconButton>
+            </div>
+            <h4 className="post__likes">23 Likes</h4>
             <h4 className="post__text"><strong>{username}</strong>: {caption}</h4>
 
             <div className="posts__comments">
