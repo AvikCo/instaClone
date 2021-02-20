@@ -8,7 +8,8 @@ import '../imageUpload.css';
 function ImageUpload({username}) {
     const [caption, setCaption] = useState('');
     const [image, setImage] = useState(null);
-    const [progress, setProgress] = useState(0)
+    const [progress, setProgress] = useState(0);
+    const [inputFile, setInputFile] = useState(2);
     
     const handleChange = (event) => {
         if(event.target.files[0]){
@@ -52,6 +53,7 @@ function ImageUpload({username}) {
                 setImage(null);
             }
         )
+        setInputFile(Math.random())
     }
 
     return (
@@ -59,7 +61,7 @@ function ImageUpload({username}) {
                 <progress className="imageUpload__progress" value={progress} max="100"/>
                 <input type = "text" placeholder="Enter a caption..." value={caption} 
                 onChange={(e)=>setCaption(e.target.value)}/>
-                <input type="file" onChange={handleChange}/>
+                <input type="file" accept= 'image/*' onChange={handleChange} key={inputFile || ''}/>
                 <Button onClick={handleUpload}>Upload</Button>
             </div>
     )
