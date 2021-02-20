@@ -31,9 +31,12 @@ function getModalStyle() {
     },
   }));  
   
-  const LoginModal = ({email, setEmail, password, setPassword, username, setUsername, user, auth}) => {
+  const LoginModal = ({ user }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [openSignIn, setOpenSignIn] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
     const classes = useStyles();
 
     const handleSignup = (event) => {
@@ -48,7 +51,9 @@ function getModalStyle() {
         )
       })
       .catch(error => alert(error.message))
-
+      setEmail('');
+      setPassword('');
+      setUsername('');
       setIsOpen(false);
       }
 
@@ -58,6 +63,9 @@ function getModalStyle() {
       auth.signInWithEmailAndPassword(email, password)
       .catch(error => alert(error.message));
       setOpenSignIn(false);
+      setEmail('');
+      setPassword('');
+      
     }
     const SignUpBody = (
         <div style={getModalStyle()} className={classes.paper}>

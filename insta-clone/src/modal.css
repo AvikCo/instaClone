@@ -2,3 +2,19 @@
     display: flex;
     flex-direction: column;
 }
+
+
+/* 
+<InstagramEmbed
+  url='https://www.instagram.com/p/B49go7aAcE8wqeXeQm6LGiKxCsgTXyG2nbk7xM0/'
+  clientAccessToken='123|456'
+  maxWidth={320}
+  hideCaption={false}
+  containerTagName='div'
+  protocol=''
+  injectScript
+  onLoading={() => {}}
+  onSuccess={() => {}}
+  onAfterRender={() => {}}
+  onFailure={() => {}}
+  /> */

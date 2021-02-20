@@ -24,3 +24,11 @@
   display: flex;
   justify-content:center;
 }
+.app__imageMessage{
+  text-align: center;
+  padding: 2vh;
+  background-color: white;
+  position: sticky;
+  bottom:0;
+
+}

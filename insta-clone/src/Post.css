@@ -12,7 +12,8 @@
 }
 .post__text{
     font-weight: normal;
-    padding: 20px;
+    padding: 10px;
+    margin: 0;
 }
 .post__header{
     display: flex;

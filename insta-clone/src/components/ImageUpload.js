@@ -15,6 +15,7 @@ function ImageUpload({username}) {
             setImage(event.target.files[0]);
         }
     };
+    console.log(username);
     const handleUpload = (event) => {
         const uploadTask = storage.ref(`images/${image.name}`).put(image);
         uploadTask.on(
@@ -54,13 +55,13 @@ function ImageUpload({username}) {
     }
 
     return (
-        <div className="imageUpload">
-            <progress className="imageUpload__progress" value={progress} max="100"/>
-            <input type = "text" placeholder="Enter a caption..." value={caption} 
-             onChange={(e)=>setCaption(e.target.value)}/>
-            <input type="file" onChange={handleChange}/>
-            <Button onClick={handleUpload}>Upload</Button>
-        </div>
+            <div className="imageUpload">
+                <progress className="imageUpload__progress" value={progress} max="100"/>
+                <input type = "text" placeholder="Enter a caption..." value={caption} 
+                onChange={(e)=>setCaption(e.target.value)}/>
+                <input type="file" onChange={handleChange}/>
+                <Button onClick={handleUpload}>Upload</Button>
+            </div>
     )
 }
 

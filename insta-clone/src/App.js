@@ -11,9 +11,6 @@ import LoginModal from './components/Modal';
 function App() {
 
 const [posts, setPosts] = useState([]);
-const [email, setEmail] = useState('');
-const [password, setPassword] = useState('');
-const [username, setUsername] = useState('');
 const [user, setUser] = useState(null);
 
 
@@ -42,7 +39,7 @@ useEffect(()=> {
 },[])
 
 
-
+// console.log(user)
   return (
     <div className="app">
     <div className="app__header">
@@ -52,14 +49,7 @@ useEffect(()=> {
         alt="instagram icon"
         />
         <LoginModal
-        email={email}
-        setEmail ={setEmail}
-        password = {password}
-        setPassword = {setPassword}
-        username = {username}
-        setUsername= {setUsername}
         user={user}
-        auth={auth}
         />
     </div>
   <div className="app__posts">
@@ -72,28 +62,12 @@ useEffect(()=> {
       }
   </div>
   <div className="app__postsRight">
-  <InstagramEmbed
-  url='https://www.instagram.com/p/B49go7aAcE8wqeXeQm6LGiKxCsgTXyG2nbk7xM0/'
-  clientAccessToken='123|456'
-  maxWidth={320}
-  hideCaption={false}
-  containerTagName='div'
-  protocol=''
-  injectScript
-  onLoading={() => {}}
-  onSuccess={() => {}}
-  onAfterRender={() => {}}
-  onFailure={() => {}}
-  />
   </div>
   </div>
-  
-      {
-        user?.displayName ? (
-       <ImageUpload username={user.displayName}/>
-       ): (<h3>Login to Upload</h3>)
-     }
-
+      {user ?
+        (<ImageUpload username={user.displayName}/>) :
+        (<h3 className="app__imageMessage">Log in to Upload</h3>)
+      }
     </div>
   );
 }
