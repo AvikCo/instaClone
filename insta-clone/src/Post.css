@@ -48,8 +48,18 @@
 }
 .post__likeSection{
     border-bottom: 1.5px solid lightgray;
+    display: flex;
 }
 .post__likes{
     margin-left: 12px;
     margin-top:0;
 }
+.post_actions{
+    padding: 7px !important;
+}
+.post_actions_bookmark{
+    justify-self: right !important;
+}
+.post_actions_bookmark{
+margin-left: auto !important;
+} 

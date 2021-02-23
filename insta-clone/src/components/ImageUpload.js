@@ -43,7 +43,7 @@ function ImageUpload({username}) {
                     db.collection("posts").add({
                         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                         caption: caption,
-                        username,
+                        username:username,
                         imageUrl: url
                     })
                 })
@@ -53,7 +53,7 @@ function ImageUpload({username}) {
                 setImage(null);
             }
         )
-        setInputFile(Math.random())
+        setInputFile(Math.random()) //it clears the  type file input field after uploading a picture
     }
 
     return (

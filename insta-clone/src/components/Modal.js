@@ -41,20 +41,27 @@ function getModalStyle() {
 
     const handleSignup = (event) => {
       event.preventDefault();
-      
-      auth.createUserWithEmailAndPassword(email, password)
-      .then((authUser) => {
-        return authUser.user.updateProfile(
-          {
-            displayName: username
-          }
-        )
-      })
-      .catch(error => alert(error.message))
-      setEmail('');
-      setPassword('');
-      setUsername('');
-      setIsOpen(false);
+       if(!username){
+
+          alert("Please enter username to Sign Up");
+
+       } else {
+        auth.createUserWithEmailAndPassword(email, password)
+        .then((authUser) => {
+          return authUser.user.updateProfile(
+            {
+              displayName: username
+            }
+          )
+        })
+        .catch(error => alert(error.message))
+        setEmail('');
+        setPassword('');
+        setUsername('');
+        setIsOpen(false);
+
+       }
+     
       }
 
     const handleSignIn = (event) => {

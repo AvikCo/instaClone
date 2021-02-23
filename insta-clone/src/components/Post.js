@@ -46,6 +46,7 @@ const postComment = (event) => {
     )
 setComment('');
 }
+console.log(username);
     return (
         <div className="post">
             <div className="post__header">
@@ -58,7 +59,7 @@ setComment('');
             </div>
             <img className="post__image" src={imageUrl}/>
             <div className="post__likeSection">
-            <IconButton className="post_actions" color="primary" aria-label="upload picture" onClick={()=> setLike(!like)} component="span">
+                 <IconButton className="post_actions" color="primary" aria-label="upload picture" onClick={()=> setLike(!like)} component="span">
                     {like ? <FavoriteIcon style={{fill:"red", fontSize: "30px"}}/>
                     :  <FavoriteBorderIcon  style={{fill: "black", fontSize: "30px"}} />
                     }
