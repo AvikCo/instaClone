@@ -10,13 +10,13 @@ import '../Post.css';
 import firebase from 'firebase'
 
 import { db } from '../firebase'
-import { Button } from '@material-ui/core';
 
 function Post({postId, username, user, caption, imageUrl}) {
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
     const [like, setLike] = useState(false);
     const [bookmark, setBookmark] = useState(false);
+    const [allLikes, setAllLikes] = useState([]);
 
 useEffect(()=> {
     let unsubscribe;
@@ -27,13 +27,42 @@ useEffect(()=> {
         .collection('comments')
         .orderBy('timestamp', 'desc')
         .onSnapshot( snapshot => {
-            setComments(snapshot.docs.map(doc => doc.data()))
+            setComments(snapshot.docs.map(doc => ({
+                id: doc.id,
+                data:doc.data()})))
         })
     }
-    return ()=>{
-        unsubscribe()
-    }
+    return ()=> unsubscribe()
 },[postId])
+
+useEffect(()=> {
+    if(user){
+const exists = allLikes.filter(like=> like.data.username === user.displayName)
+
+if(exists.length !== 0)
+    setLike(true);
+else 
+    setLike(false);
+    
+    }
+},[user,allLikes])
+
+useEffect(()=> {
+    let unsubscribe;
+     unsubscribe = db.collection("posts").doc(postId).collection("likes").onSnapshot(snapShot => setAllLikes(
+         snapShot.docs.map(doc => (
+             {
+             id: doc.id,
+             data: doc.data()
+             }
+         )))
+     )
+        return ()=> unsubscribe();
+        
+        },[])
+
+
+        
 const postComment = (event) => {
     event.preventDefault();
     db.collection("posts").doc(postId).collection("comments").add(
@@ -46,7 +75,30 @@ const postComment = (event) => {
     )
 setComment('');
 }
-console.log(username);
+
+const postLike = (event) => {
+    if(user){
+    event.preventDefault();
+    if(like){
+        db.collection("posts").doc(postId).collection("likes").where("username",'==',user.displayName).get()
+        .then((querySnapshot) =>{
+            querySnapshot.forEach(doc=> doc.ref.delete())
+        })
+    }else{
+        db.collection("posts").doc(postId).collection("likes").add(
+            {
+               username: user.displayName,
+               timestamp : firebase.firestore.FieldValue.serverTimestamp()
+            }
+        )
+    }
+    setLike(!like)
+}
+else{
+    alert("Please login to like or comment")
+    setLike(false);
+}
+}
     return (
         <div className="post">
             <div className="post__header">
@@ -59,7 +111,7 @@ console.log(username);
             </div>
             <img className="post__image" src={imageUrl}/>
             <div className="post__likeSection">
-                 <IconButton className="post_actions" color="primary" aria-label="upload picture" onClick={()=> setLike(!like)} component="span">
+                 <IconButton className="post_actions" color="primary" aria-label="upload picture" onClick={postLike} component="span">
                     {like ? <FavoriteIcon style={{fill:"red", fontSize: "30px"}}/>
                     :  <FavoriteBorderIcon  style={{fill: "black", fontSize: "30px"}} />
                     }
@@ -74,14 +126,14 @@ console.log(username);
                    }
                 </IconButton>
             </div>
-            <h4 className="post__likes">23 Likes</h4>
+            <h4 className="post__likes">{allLikes.length} Likes</h4>
             <h4 className="post__text"><strong>{username}</strong>: {caption}</h4>
 
             <div className="posts__comments">
                 {
-                    comments.map(comment => (
-                        <p>
-                        <strong>{comment.username}: </strong>{comment.text}
+                    comments.map(({id,data}) => (
+                        <p key={id}>
+                        <strong>{data.username}: </strong>{data.text}
                         </p>
                     ))
                 }
