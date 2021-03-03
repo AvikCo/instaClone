@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react'
 import './App.css';
 import Post from './components/Post';
 import { db, auth } from './firebase';
+import Avatar from '@material-ui/core/Avatar'
 import InstagramEmbed from 'react-instagram-embed';
 
 import ImageUpload from './components/ImageUpload';
@@ -27,6 +28,7 @@ useEffect(()=> {
   const unsubscribe = auth.onAuthStateChanged((authUser) => {
     if(authUser){
       //user has logged in successfully
+      console.log(authUser);
       setUser(authUser)
     } else{
       //user has logged out
@@ -39,7 +41,7 @@ useEffect(()=> {
 },[])
 
 
-// console.log(user)
+
   return (
     <div className="app">
     <div className="app__header">
@@ -48,15 +50,24 @@ useEffect(()=> {
         src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
         alt="instagram icon"
         />
+        <Avatar className="app__avatar"
+        className="post__avatar"
+        src={user?.photoURL}
+        alt={user?.displayName}
+        />
         <LoginModal
         user={user}
         />
+       
     </div>
   <div className="app__posts">
   <div className="app__postsLeft">
       {
         posts.map(({id, post}) => (
-        <Post key={id} username={post.username} user={user} postId={id} caption={post.caption} imageUrl={post.imageUrl} />
+        <Post key={id} username={post.username} user={user} postId={id} 
+        date={post.timestamp} caption={post.caption} imageUrl={post.imageUrl}
+        prflPhotoUrl={post.prflPhotoUrl}
+         />
           )
         )
       }
@@ -65,7 +76,7 @@ useEffect(()=> {
   </div>
   </div>
       {user ?
-        (<ImageUpload username={user.displayName}/>) :
+        (<ImageUpload username={user.displayName} pflPhotoUrl={user?.photoURL}/>) :
         (<h3 className="app__imageMessage">Log in to Upload</h3>)
       }
     </div>

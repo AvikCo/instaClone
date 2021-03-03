@@ -37,6 +37,7 @@ function getModalStyle() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
+    const [prflPhotoUrl, setPrfPhotoUrl] = useState('');
     const classes = useStyles();
 
     const handleSignup = (event) => {
@@ -50,7 +51,8 @@ function getModalStyle() {
         .then((authUser) => {
           return authUser.user.updateProfile(
             {
-              displayName: username
+              displayName: username,
+              photoURL: prflPhotoUrl
             }
           )
         })
@@ -58,6 +60,7 @@ function getModalStyle() {
         setEmail('');
         setPassword('');
         setUsername('');
+        setPrfPhotoUrl('');
         setIsOpen(false);
 
        }
@@ -101,7 +104,12 @@ function getModalStyle() {
             type="text"
             value={username}
             onChange={(e)=> setUsername(e.target.value)}/>
-           
+            <Input
+            placeholder="profile photo url (Optional)"
+            type="text"
+            value={prflPhotoUrl}
+            onChange={e=> setPrfPhotoUrl(e.target.value)}/>
+
             <Button onClick={handleSignup}>Sign Up</Button>
         
             </form>

@@ -11,7 +11,7 @@ import firebase from 'firebase'
 
 import { db } from '../firebase'
 
-function Post({postId, username, user, caption, imageUrl}) {
+function Post({postId, date, username, user, caption, imageUrl, prflPhotoUrl}) {
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
     const [like, setLike] = useState(false);
@@ -25,7 +25,7 @@ useEffect(()=> {
         .collection('posts')
         .doc(postId)
         .collection('comments')
-        .orderBy('timestamp', 'desc')
+        .orderBy('timestamp', 'asc')
         .onSnapshot( snapshot => {
             setComments(snapshot.docs.map(doc => ({
                 id: doc.id,
@@ -45,6 +45,8 @@ else
     setLike(false);
     
     }
+    else
+        setLike(false);
 },[user,allLikes])
 
 useEffect(()=> {
@@ -96,17 +98,17 @@ const postLike = (event) => {
 }
 else{
     alert("Please login to like or comment")
-    setLike(false);
+    
 }
 }
+
     return (
         <div className="post">
             <div className="post__header">
                 <Avatar
-                alt={username}
                 className="post__avatar"
-                src="static/images/avatar/1.jpg"
-                />
+                src={prflPhotoUrl}
+                ></Avatar>
                 <h4>{username}</h4>
             </div>
             <img className="post__image" src={imageUrl}/>
@@ -126,17 +128,23 @@ else{
                    }
                 </IconButton>
             </div>
-            <h4 className="post__likes">{allLikes.length} Likes</h4>
-            <h4 className="post__text"><strong>{username}</strong>: {caption}</h4>
+            <h4 className="post__likes">{allLikes.length > 0 ? allLikes.length > 1 ? 
+            (`Liked by ${allLikes[1].data.username} and ${allLikes.length-1} others`)
+            :`${allLikes.length} like`: null}</h4>
+            <h4 className="post__text"><strong>{username}</strong> {caption}</h4>
+            <h2 className="post__date">{date?.toDate().toDateString()}</h2>
 
             <div className="posts__comments">
                 {
                     comments.map(({id,data}) => (
                         <p key={id}>
-                        <strong>{data.username}: </strong>{data.text}
+                        <strong>{data.username} </strong>{data.text}
                         </p>
                     ))
                 }
+            </div>
+            <div className="posts__lastCommentDate">
+            {comments.length > 0 ? (<p>{comments[comments.length - 1].data.timestamp?.toDate().toDateString()}</p>): null}
             </div>
                 {user && (
                     <form className="post__commentBox">

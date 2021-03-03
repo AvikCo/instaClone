@@ -5,12 +5,11 @@ import {db, storage} from '../firebase';
 
 import '../imageUpload.css';
 
-function ImageUpload({username}) {
+function ImageUpload({username,pflPhotoUrl}) {
     const [caption, setCaption] = useState('');
     const [image, setImage] = useState(null);
     const [progress, setProgress] = useState(0);
     const [inputFile, setInputFile] = useState(2);
-    
     const handleChange = (event) => {
         if(event.target.files[0]){
             setImage(event.target.files[0]);
@@ -43,7 +42,8 @@ function ImageUpload({username}) {
                         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                         caption: caption,
                         username:username,
-                        imageUrl: url
+                        imageUrl: url,
+                        prflPhotoUrl: pflPhotoUrl
                     })
                 })
                 .catch(error => console.log(error.message))
