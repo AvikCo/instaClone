@@ -149,7 +149,7 @@ function getModalStyle() {
         <React.Fragment>
         { user ? (
             <Button onClick={()=> auth.signOut()}>
-            Log Out</Button> ) :
+            Log Out</Button>) :
            (    <div className="app__logInContainer">
                   <Button onClick={()=> setOpenSignIn(true)}>Sign In</Button>
                   <Button onClick={()=> setIsOpen(true)}>Sign Up</Button>

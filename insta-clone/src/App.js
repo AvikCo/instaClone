@@ -28,7 +28,7 @@ useEffect(()=> {
   const unsubscribe = auth.onAuthStateChanged((authUser) => {
     if(authUser){
       //user has logged in successfully
-      console.log(authUser);
+      //console.log(authUser);
       setUser(authUser)
     } else{
       //user has logged out
@@ -40,8 +40,6 @@ useEffect(()=> {
   }
 },[])
 
-
-
   return (
     <div className="app">
     <div className="app__header">
@@ -51,10 +49,12 @@ useEffect(()=> {
         alt="instagram icon"
         />
         <Avatar className="app__avatar"
-        className="post__avatar"
-        src={user?.photoURL}
-        alt={user?.displayName}
-        />
+          className="post__avatar"
+          src={user?.photoURL}
+          alt={user?.displayName}
+          key={user?.photoURL}
+          />
+        
         <LoginModal
         user={user}
         />
@@ -76,8 +76,11 @@ useEffect(()=> {
   </div>
   </div>
       {user ?
-        (<ImageUpload username={user.displayName} pflPhotoUrl={user?.photoURL}/>) :
+        (<ImageUpload username={user.displayName} prflPhotoUrl={user.photoURL}/>) :
         (<h3 className="app__imageMessage">Log in to Upload</h3>)
+      }
+      {
+        user? console.log(user):null
       }
     </div>
   );
