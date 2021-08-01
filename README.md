@@ -1,8 +1,9 @@
+
 # instagramClone
 ![Capture](https://user-images.githubusercontent.com/73161634/110325763-bf8d4900-803d-11eb-842d-46ceca618219.PNG)
 
 This is a react based application that looks and works similar to Instagram, below are the main features
-* Sing up , Sign In using firebase authentication
+* Sign up , Sign In using firebase authentication
 * Upload a image and post on the wall
 * Like any post, see the likes count
 * Comment on any post(s)
